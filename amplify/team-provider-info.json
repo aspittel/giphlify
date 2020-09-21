@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-giphlify-dev-160544-authRole",
+            "UnauthRoleArn": "arn:aws:iam::000691573582:role/amplify-giphlify-dev-160544-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::000691573582:role/amplify-giphlify-dev-160544-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-giphlify-dev-160544-deployment",
+            "UnauthRoleName": "amplify-giphlify-dev-160544-unauthRole",
+            "StackName": "amplify-giphlify-dev-160544",
+            "StackId": "arn:aws:cloudformation:us-east-1:000691573582:stack/amplify-giphlify-dev-160544/381db0e0-fc4e-11ea-a82c-0ae7d4a2969f",
+            "AmplifyAppId": "d2ane774efa8qe"
+        }
+    }
+}

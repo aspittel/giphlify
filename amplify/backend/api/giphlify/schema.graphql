@@ -1,0 +1,5 @@
+type Gif @model {
+  id: ID!
+  altText: String!
+  url: String!
+}
