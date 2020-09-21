@@ -1,7 +1,7 @@
 import Amplify, { API, graphqlOperation } from '@aws-amplify/api'
 import awsConfig from './aws-exports'
 
-import { createGif, updateGif } from './graphql/mutations'
+import { createGif, deleteGif, updateGif } from './graphql/mutations'
 import { listGifs } from './graphql/queries'
 
 Amplify.configure(awsConfig)
@@ -68,9 +68,16 @@ const editGif = async e => {
   }
 }
 
+const removeGif = async () => {
+  await API.graphql(graphqlOperation(deleteGif, {
+    input: { id: currentGifId }
+  }))
+  getGifs()
+}
+
+document.getElementById('delete-button').addEventListener('click', removeGif)
 document.getElementById('edit-form').addEventListener('submit', editGif)
+document.getElementById('create-form').addEventListener('submit', createNewGif)
 
 // run this function on page load
 getGifs()
-
-document.getElementById('create-form').addEventListener('submit', createNewGif)
