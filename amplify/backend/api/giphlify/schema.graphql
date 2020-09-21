@@ -1,5 +1,0 @@
-type Gif @model {
-  id: ID!
-  name: String!
-  url: String
-}
