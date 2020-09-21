@@ -1,10 +1,12 @@
 import Amplify, { API, graphqlOperation } from '@aws-amplify/api'
 import awsConfig from './aws-exports'
 
-import { createGif } from './graphql/mutations'
+import { createGif, updateGif } from './graphql/mutations'
 import { listGifs } from './graphql/queries'
 
 Amplify.configure(awsConfig)
+
+let currentGifId = ''
 
 const createNewGif = async e => {
   e.preventDefault()
@@ -30,7 +32,7 @@ const getGifs = async () => {
   container.innerHTML = ''
   // make a request to get all our gifs
   const gifs = await API.graphql(graphqlOperation(listGifs))
-  // loop through our gifs and 
+  // loop through our gifs and display them on the page
   gifs.data.listGifs.items.map(gif => {
     // create a new image element
     const img = document.createElement('img')
@@ -38,10 +40,35 @@ const getGifs = async () => {
     img.setAttribute('src', gif.url)
     // add the alt attribute to the img
     img.setAttribute('alt', gif.altText)
+    img.addEventListener('click', e => {
+      currentGifId = gif.id
+      document.getElementById('edit-altText').value = gif.altText
+      document.getElementById('edit-url').value = gif.url
+      document.getElementById('edit-title').innerText = `Update ${gif.altText}`
+    })
     // add the image to the container
     document.querySelector('.container').appendChild(img)
   })
 }
+
+const editGif = async e => {
+  e.preventDefault()
+
+  try {
+    await API.graphql(graphqlOperation(updateGif, {
+      input: {
+        id: currentGifId,
+        altText: document.getElementById('edit-altText').value,
+        url: document.getElementById('edit-url').value
+      }
+    }))
+    getGifs()
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+document.getElementById('edit-form').addEventListener('submit', editGif)
 
 // run this function on page load
 getGifs()
